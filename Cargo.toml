@@ -1,0 +1,8 @@
+[package]
+name = "stormy_skies"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+console_error_panic_hook = "0.1.7"
+leptos = { version = "0.6.5", features = ["nightly", "csr"] }
