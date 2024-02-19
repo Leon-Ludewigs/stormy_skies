@@ -1,10 +1,10 @@
 use std::fmt;
 use std::fmt::{Display, Formatter};
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct Coordinates {
-    latitude: f32,
-    longitude: f32,
+    latitude_times_100: i32,
+    longitude_times_100: i32,
 }
 
 impl Coordinates {
@@ -20,16 +20,19 @@ impl Coordinates {
         } else if !(Self::MIN_LONGITUDE..Self::MAX_LONGITUDE).contains(&longitude) {
             Err(Error::InvalidLongitude(longitude))
         } else {
-            Ok(Coordinates { latitude, longitude })
+            let latitude_times_100 = (100. * latitude) as i32;
+            let longitude_times_100 = (100. * longitude) as i32;
+
+            Ok(Coordinates { latitude_times_100, longitude_times_100 })
         }
     }
 
     pub fn latitude(&self) -> f32 {
-        self.latitude
+        (self.latitude_times_100 as f32) / 100.
     }
 
     pub fn longitude(&self) -> f32 {
-        self.longitude
+        (self.longitude_times_100 as f32) / 100.
     }
 }
 
@@ -38,16 +41,13 @@ impl Display for Coordinates {
         write!(
             f,
             "{}°{}, {}°{}",
-            self.latitude.abs(),
-            if self.latitude < 0. { 'S' } else { 'N' },
-            self.longitude.abs(),
-            if self.longitude < 0. { 'W' } else { 'E' },
+            self.latitude().abs(),
+            if self.latitude() < 0. { 'S' } else { 'N' },
+            self.longitude().abs(),
+            if self.longitude() < 0. { 'W' } else { 'E' },
         )
     }
 }
-
-// TODO not very clean, but required to make this a source for a resource - it's probably best to use a dedicated data type instead of f32
-impl Eq for Coordinates {}
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {

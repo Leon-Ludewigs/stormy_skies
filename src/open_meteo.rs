@@ -20,7 +20,7 @@ mod api_response {
     }
 }
 
-pub async fn call_api(coordinates: Coordinates) -> Result<WeatherData, Error> { // TODO replace with result with custom error type
+pub async fn call_api(coordinates: Coordinates) -> Result<WeatherData, Error> {
     let url = format!(
         "https://api.open-meteo.com/v1/forecast?latitude={}&longitude={}&current=weather_code",
         coordinates.latitude(),
