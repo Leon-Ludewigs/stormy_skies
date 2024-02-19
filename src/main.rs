@@ -2,8 +2,5 @@ use leptos::*;
 
 fn main() {
     console_error_panic_hook::set_once();
-
-    mount_to_body(|| view! {
-        <h1>Test</h1>
-    })
+    mount_to_body(stormy_skies::ui::App )
 }
