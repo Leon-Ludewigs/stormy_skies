@@ -20,5 +20,15 @@ pub fn App() -> impl IntoView {
         })
     };
 
-    view! { <h1>{ weather_data_view }</h1> }
+    view! {
+        <h1>{ weather_data_view }</h1>
+        <Footer/>
+    }
+}
+
+#[component]
+fn Footer() -> impl IntoView {
+    view! {
+        <a href="https://open-meteo.com/">Weather data by Open-Meteo.com</a>
+    }
 }
