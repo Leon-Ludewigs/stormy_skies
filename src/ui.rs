@@ -1,22 +1,23 @@
 use leptos::*;
 use crate::data::Coordinates;
 use crate::open_meteo::{self, WeatherData};
+use crate::util::NeverEqual;
 
-type WeatherDataResource = Resource<Option<Coordinates>, Option<Result<WeatherData, open_meteo::Error>>>;
+type WeatherDataResource = Resource<Option<NeverEqual<Coordinates>>, Option<Result<WeatherData, open_meteo::Error>>>;
 
 #[component]
 pub fn App() -> impl IntoView {
     use crate::data::Coordinates;
     use crate::open_meteo::{self, WeatherData};
 
-    let (get_coordinates, set_coordinates) = create_signal::<Option<Coordinates>>(None);
+    let (get_coordinates, set_coordinates) = create_signal::<Option<NeverEqual<Coordinates>>>(None);
 
-    async fn fetch_weather_data(coordinates: Option<Coordinates>) -> Option<Result<WeatherData, open_meteo::Error>> {
-        Some(open_meteo::call_api(coordinates?).await)
+    async fn fetch_weather_data(coordinates: Option<NeverEqual<Coordinates>>) -> Option<Result<WeatherData, open_meteo::Error>> {
+        Some(open_meteo::call_api(coordinates?.into_inner()).await)
     }
 
     let weather_data = create_local_resource(
-        get_coordinates, // TODO to allow refreshing on error cases, the return type here should be irreflexive over PartialEq
+        get_coordinates,
         fetch_weather_data,
     );
 
@@ -30,7 +31,7 @@ pub fn App() -> impl IntoView {
 }
 
 #[component]
-fn Header(set_coordinates: WriteSignal<Option<Coordinates>>) -> impl IntoView {
+fn Header(set_coordinates: WriteSignal<Option<NeverEqual<Coordinates>>>) -> impl IntoView {
     use crate::data::{Coordinates, Latitude, Longitude};
 
     let (get_latitude_text, set_latitude_text) = create_signal(String::default());
@@ -74,7 +75,7 @@ fn Header(set_coordinates: WriteSignal<Option<Coordinates>>) -> impl IntoView {
 
             <button
                 on:click = move |_| {
-                    set_coordinates(get_floating_coordinates());
+                    set_coordinates(get_floating_coordinates().map(NeverEqual));
                 }
             >Forecast</button>
         </header>
