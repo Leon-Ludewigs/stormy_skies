@@ -1,4 +1,3 @@
-use thiserror::Error;
 use crate::data::{Coordinates, Weather, weather};
 
 #[derive(Debug)]
@@ -23,8 +22,8 @@ mod api_response {
 pub async fn call_api(coordinates: Coordinates) -> Result<WeatherData, Error> {
     let url = format!(
         "https://api.open-meteo.com/v1/forecast?latitude={}&longitude={}&current=weather_code",
-        coordinates.latitude(),
-        coordinates.longitude(),
+        f32::from(coordinates.latitude),
+        f32::from(coordinates.longitude),
     );
 
     let api_response = reqwasm::http::Request::get(&url)
@@ -38,7 +37,7 @@ pub async fn call_api(coordinates: Coordinates) -> Result<WeatherData, Error> {
     Ok(WeatherData { weather })
 }
 
-#[derive(Debug, Error)]
+#[derive(Debug, thiserror::Error)]
 pub enum Error {
     #[error("The weather could not be interpreted correctly: {0}")]
     WeatherError(#[from] weather::Error),

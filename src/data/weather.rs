@@ -1,5 +1,3 @@
-use thiserror::Error;
-
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct Weather {
     /// Code following the WMO interpretation standard as documented in
@@ -21,7 +19,7 @@ impl Weather {
     }
 }
 
-#[derive(Debug, Error)]
+#[derive(Debug, thiserror::Error)]
 pub enum Error {
     #[error("The code {0} is not a valid WMO weather interpretation code")]
     InvalidWmoCode(u8),
