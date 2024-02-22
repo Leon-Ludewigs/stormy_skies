@@ -19,7 +19,7 @@ impl Weather {
     }
 }
 
-#[derive(Debug, thiserror::Error)]
+#[derive(Clone, Debug, thiserror::Error)]
 pub enum Error {
     #[error("The code {0} is not a valid WMO weather interpretation code")]
     InvalidWmoCode(u8),

@@ -1,6 +1,7 @@
+use std::rc::Rc;
 use crate::data::{Coordinates, Weather, weather};
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct WeatherData {
     pub weather: Weather,
 }
@@ -37,11 +38,18 @@ pub async fn call_api(coordinates: Coordinates) -> Result<WeatherData, Error> {
     Ok(WeatherData { weather })
 }
 
-#[derive(Debug, thiserror::Error)]
+#[derive(Clone, Debug, thiserror::Error)]
 pub enum Error {
     #[error("The weather could not be interpreted correctly: {0}")]
     WeatherError(#[from] weather::Error),
 
     #[error("The Open-Meteo API could not be called successfully: {0}")]
-    ApiCall(#[from] reqwasm::Error),
+    ApiCall(Rc<reqwasm::Error>),
+}
+
+// TODO is there a way to do this with a macro from this-error?
+impl From<reqwasm::Error> for Error {
+    fn from(error: reqwasm::Error) -> Self {
+        Error::ApiCall(Rc::new(error))
+    }
 }

@@ -3,29 +3,40 @@ use crate::data::Coordinates;
 use crate::open_meteo::{self, WeatherData};
 use crate::util::NeverEqual;
 
-type WeatherDataResource = Resource<Option<NeverEqual<Coordinates>>, Option<Result<WeatherData, open_meteo::Error>>>;
+enum ApiCallState {
+    NotCalled,
+    ResponsePending,
+    Error(open_meteo::Error),
+    Responded(WeatherData),
+}
 
 #[component]
 pub fn App() -> impl IntoView {
-    use crate::data::Coordinates;
-    use crate::open_meteo::{self, WeatherData};
-
     let (get_coordinates, set_coordinates) = create_signal::<Option<NeverEqual<Coordinates>>>(None);
 
     async fn fetch_weather_data(coordinates: Option<NeverEqual<Coordinates>>) -> Option<Result<WeatherData, open_meteo::Error>> {
         Some(open_meteo::call_api(coordinates?.into_inner()).await)
     }
 
-    let weather_data = create_local_resource(
+    let weather_data_resource = create_local_resource(
         get_coordinates,
         fetch_weather_data,
     );
+
+    let weather_data_state = move || {
+        match weather_data_resource.get() {
+            None => ApiCallState::ResponsePending,
+            Some(None) => ApiCallState::NotCalled,
+            Some(Some(Err(error))) => ApiCallState::Error(error),
+            Some(Some(Ok(response))) => ApiCallState::Responded(response),
+        }
+    };
 
     // TODO add fallback, see https://github.com/leptos-rs/leptos/blob/main/examples/fetch/src/lib.rs
 
     view! {
         <Header set_coordinates=set_coordinates/>
-        <Main weather_data=weather_data/>
+        <Main weather_data_state=weather_data_state/>
         <Footer/>
     }
 }
@@ -74,7 +85,7 @@ fn Header(set_coordinates: WriteSignal<Option<NeverEqual<Coordinates>>>) -> impl
             />
 
             <button
-                on:click = move |_| {
+                on:click = move |_| { // TODO add a cool-down for this button to prevent spamming
                     set_coordinates(get_floating_coordinates().map(NeverEqual));
                 }
             >Forecast</button>
@@ -83,28 +94,55 @@ fn Header(set_coordinates: WriteSignal<Option<NeverEqual<Coordinates>>>) -> impl
 }
 
 #[component]
-fn Main(weather_data: WeatherDataResource) -> impl IntoView {
+fn Main<F>(weather_data_state: F) -> impl IntoView where F: Fn() -> ApiCallState + 'static {
+    let load_main = move || {
+        match weather_data_state() {
+            ApiCallState::NotCalled =>
+                MainBeforeFirstRequest().into_view(),
+
+            ApiCallState::ResponsePending =>
+                MainWhileRequestPending().into_view(),
+
+            ApiCallState::Error(error) =>
+                view! { <MainWithError error={ move || error.clone() }/> },
+
+            ApiCallState::Responded(weather_data) =>
+                view! { <MainWithLoadedData weather_data={ move || weather_data.clone() } /> },
+        }
+    };
+
     view! {
         <main>
-            <CurrentWeatherCard weather_data=weather_data/>
+            { load_main }
         </main>
     }
 }
 
 #[component]
-fn CurrentWeatherCard(weather_data: WeatherDataResource) -> impl IntoView {
-    let weather_data_str = move || weather_data.map(|weather_data| {
-        match weather_data {
-            Some(Ok(weather_data)) => format!("Weather Code: {}", weather_data.weather.wmo_code()),
-            Some(Err(error)) => format!("Error loading the data: {}", error),
-            None => "Enter your coordinates above".to_owned(),
-        }
-    });
-
+fn MainBeforeFirstRequest() -> impl IntoView {
     view! {
-        <div>
-            <h1>{ weather_data_str }</h1>
-        </div>
+        <h1>No Request made</h1>
+    }
+}
+
+#[component]
+fn MainWhileRequestPending() -> impl IntoView {
+    view! {
+        <h1>Pending...</h1>
+    }
+}
+
+#[component]
+fn MainWithError<F>(error: F) -> impl IntoView where F: Fn() -> open_meteo::Error + 'static {
+    view! {
+        <h1>Error: { move || error().to_string() }</h1>
+    }
+}
+
+#[component]
+fn MainWithLoadedData<F>(weather_data: F) -> impl IntoView where F: Fn() -> WeatherData + 'static {
+    view! {
+        <h1>WMO Code: { move || weather_data().weather.wmo_code() }</h1>
     }
 }
 

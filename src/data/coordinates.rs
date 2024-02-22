@@ -49,7 +49,7 @@ Display for Coordinate<MIN, MAX, NEG_PREF, POS_PREF> {
     }
 }
 
-#[derive(Debug, thiserror::Error)]
+#[derive(Clone, Debug, thiserror::Error)]
 pub enum Error {
     #[error("The value must lie in [{min}, {max}], but it is {actual}")]
     OutOfRange { min: f32, max: f32, actual: f32 },
