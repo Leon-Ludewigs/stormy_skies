@@ -1,7 +1,9 @@
+use std::ops::Deref;
 use leptos::*;
-use crate::data::Coordinates;
+use crate::data::{Coordinates, WeatherRegistry};
 use crate::open_meteo::{self, WeatherData};
-use crate::util::NeverEqual;
+use crate::util::{AlwaysEqual, NeverEqual};
+use std::rc::Rc;
 
 enum ApiCallState {
     NotCalled,
@@ -11,16 +13,23 @@ enum ApiCallState {
 }
 
 #[component]
-pub fn App() -> impl IntoView {
+pub fn App(weather_registry: Rc<WeatherRegistry>) -> impl IntoView {
     let (get_coordinates, set_coordinates) = create_signal::<Option<NeverEqual<Coordinates>>>(None);
 
-    async fn fetch_weather_data(coordinates: Option<NeverEqual<Coordinates>>) -> Option<Result<WeatherData, open_meteo::Error>> {
-        Some(open_meteo::call_api(coordinates?.into_inner()).await)
+    let source = move || (AlwaysEqual(weather_registry.clone()), get_coordinates());
+
+    async fn fetcher((weather_registry, coordinates): (AlwaysEqual<Rc<WeatherRegistry>>, Option<NeverEqual<Coordinates>>))
+                     -> Option<Result<WeatherData, open_meteo::Error>> {
+        let coordinates = coordinates?.into_inner();
+        let weather_registry = weather_registry.into_inner();
+        let weather_registry = weather_registry.deref();
+        let weather_data = open_meteo::call_api(weather_registry, coordinates).await;
+        Some(weather_data)
     }
 
     let weather_data_resource = create_local_resource(
-        get_coordinates,
-        fetch_weather_data,
+        source,
+        fetcher,
     );
 
     let weather_data_state = move || {
@@ -142,7 +151,7 @@ fn MainWithError<F>(error: F) -> impl IntoView where F: Fn() -> open_meteo::Erro
 #[component]
 fn MainWithLoadedData<F>(weather_data: F) -> impl IntoView where F: Fn() -> WeatherData + 'static {
     view! {
-        <h1>WMO Code: { move || weather_data().weather.wmo_code() }</h1>
+        <h1>Current Weather: { move || weather_data().weather.description.to_string() }</h1>
     }
 }
 

@@ -1,26 +1,30 @@
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+use std::collections::HashMap;
+use std::rc::Rc;
+use serde::Deserialize;
+use crate::data::WmoCode;
+
+#[derive(Clone, Debug, Deserialize, Eq, PartialEq)]
 pub struct Weather {
-    /// Code following the WMO interpretation standard as documented in
-    /// https://www.nodc.noaa.gov/archive/arc0021/0002199/1.1/data/0-data/HTML/WMO-CODE/WMO4677.HTM
-    wmo_code: u8,
+    pub description: Rc<str>,
+    pub icon_path: Rc<str>,
 }
 
-impl Weather {
-    pub fn from_wmo_code(wmo_code: u8) -> Result<Weather, Error> {
-        if wmo_code <= 99 {
-            Ok(Weather { wmo_code })
-        } else {
-            Err(Error::InvalidWmoCode(wmo_code))
-        }
+const REGISTRY_JSON: &str = include_str!("../../compile_time_configs/wmo_codes.json");
+
+pub struct WeatherRegistry(HashMap<WmoCode, Weather>);
+
+impl WeatherRegistry {
+    pub fn load() -> Result<WeatherRegistry, serde_json::Error> {
+        let map = serde_json::from_str::<HashMap<u8, Weather>>(REGISTRY_JSON)?;
+
+        let map = map.into_iter().flat_map(|(wmo_code_value, weather)| {
+            WmoCode::try_from(wmo_code_value).ok().map(|wmo_code| (wmo_code, weather))
+        }).collect::<HashMap<_, _>>();
+
+        Ok(WeatherRegistry(map))
     }
 
-    pub fn wmo_code(&self) -> u8 {
-        self.wmo_code
+    pub fn get(&self, wmo_code: WmoCode) -> Option<Weather> {
+        Some(self.0.get(&wmo_code)?.clone())
     }
-}
-
-#[derive(Clone, Debug, thiserror::Error)]
-pub enum Error {
-    #[error("The code {0} is not a valid WMO weather interpretation code")]
-    InvalidWmoCode(u8),
 }

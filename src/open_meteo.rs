@@ -1,5 +1,6 @@
 use std::rc::Rc;
-use crate::data::{Coordinates, Weather, weather};
+use crate::data::{Coordinates, Weather, wmo_code, WmoCode};
+use crate::data::weather::WeatherRegistry;
 
 #[derive(Clone, Debug)]
 pub struct WeatherData {
@@ -20,7 +21,8 @@ mod api_response {
     }
 }
 
-pub async fn call_api(coordinates: Coordinates) -> Result<WeatherData, Error> {
+pub async fn call_api(weather_registry: &WeatherRegistry,
+                      coordinates: Coordinates) -> Result<WeatherData, Error> {
     let url = format!(
         "https://api.open-meteo.com/v1/forecast?latitude={}&longitude={}&current=weather_code",
         f32::from(coordinates.latitude),
@@ -33,15 +35,19 @@ pub async fn call_api(coordinates: Coordinates) -> Result<WeatherData, Error> {
         .json::<api_response::Response>()
         .await?;
 
-    let weather = Weather::from_wmo_code(api_response.current.weather_code)?;
+    let wmo_code = WmoCode::try_from(api_response.current.weather_code)?;
+    let weather = weather_registry.get(wmo_code).ok_or(Error::WmoCodeNotRegistered(wmo_code))?;
 
     Ok(WeatherData { weather })
 }
 
 #[derive(Clone, Debug, thiserror::Error)]
 pub enum Error {
-    #[error("The weather could not be interpreted correctly: {0}")]
-    WeatherError(#[from] weather::Error),
+    #[error("Invalid WMO code: {0}")]
+    InvalidWmoCode(#[from] wmo_code::Error),
+
+    #[error("The obtained WMO code ({:?}) is not contained in the registry used", u8::from(*.0))]
+    WmoCodeNotRegistered(WmoCode),
 
     #[error("The Open-Meteo API could not be called successfully: {0}")]
     ApiCall(Rc<reqwasm::Error>),

@@ -1,0 +1,501 @@
+{
+  "0": {
+    "description": "Clear",
+    "icon_path": "TODO"
+  },
+
+  "1": {
+    "description": "Clouds",
+    "icon_path": "TODO"
+  },
+
+  "2": {
+    "description": "Clouds",
+    "icon_path": "TODO"
+  },
+
+  "3": {
+    "description": "Overcast",
+    "icon_path": "TODO"
+  },
+
+  "4": {
+    "description": "Smoke",
+    "icon_path": "TODO"
+  },
+
+  "5": {
+    "description": "Haze",
+    "icon_path": "TODO"
+  },
+
+  "6": {
+    "description": "Dust",
+    "icon_path": "TODO"
+  },
+
+  "7": {
+    "description": "Dust",
+    "icon_path": "TODO"
+  },
+
+  "8": {
+    "description": "Dust Whirls",
+    "icon_path": "TODO"
+  },
+
+  "9": {
+    "description": "Sandstorm",
+    "icon_path": "TODO"
+  },
+
+  "10": {
+    "description": "Mist",
+    "icon_path": "TODO"
+  },
+
+  "11": {
+    "description": "Fog",
+    "icon_path": "TODO"
+  },
+
+  "12": {
+    "description": "Fog",
+    "icon_path": "TODO"
+  },
+
+  "13": {
+    "description": "Thunderstorm",
+    "icon_path": "TODO"
+  },
+
+  "14": {
+    "description": "Overcast",
+    "icon_path": "TODO"
+  },
+
+  "15": {
+    "description": "Overcast",
+    "icon_path": "TODO"
+  },
+
+  "16": {
+    "description": "Overcast",
+    "icon_path": "TODO"
+  },
+
+  "17": {
+    "description": "Thunderstorm",
+    "icon_path": "TODO"
+  },
+
+  "18": {
+    "description": "Squalls",
+    "icon_path": "TODO"
+  },
+
+  "19": {
+    "description": "Funnel Clouds",
+    "icon_path": "TODO"
+  },
+
+  "20": {
+    "description": "Drizzle",
+    "icon_path": "TODO"
+  },
+
+  "21": {
+    "description": "Rain",
+    "icon_path": "TODO"
+  },
+
+  "22": {
+    "description": "Snow",
+    "icon_path": "TODO"
+  },
+
+  "23": {
+    "description": "Rain & Snow",
+    "icon_path": "TODO"
+  },
+
+  "24": {
+    "description": "Freezing Rain",
+    "icon_path": "TODO"
+  },
+
+  "25": {
+    "description": "Shower",
+    "icon_path": "TODO"
+  },
+
+  "26": {
+    "description": "Snow",
+    "icon_path": "TODO"
+  },
+
+  "27": {
+    "description": "Hail",
+    "icon_path": "TODO"
+  },
+
+  "28": {
+    "description": "Fog",
+    "icon_path": "TODO"
+  },
+
+  "29": {
+    "description": "Thunderstorm",
+    "icon_path": "TODO"
+  },
+
+  "30": {
+    "description": "Sandstorm",
+    "icon_path": "TODO"
+  },
+
+  "31": {
+    "description": "Sandstorm",
+    "icon_path": "TODO"
+  },
+
+  "32": {
+    "description": "Sandstorm",
+    "icon_path": "TODO"
+  },
+
+  "33": {
+    "description": "Sandstorm",
+    "icon_path": "TODO"
+  },
+
+  "34": {
+    "description": "Sandstorm",
+    "icon_path": "TODO"
+  },
+
+  "35": {
+    "description": "Sandstorm",
+    "icon_path": "TODO"
+  },
+
+  "36": {
+    "description": "Blowing Snow",
+    "icon_path": "TODO"
+  },
+
+  "37": {
+    "description": "Drifting Snow",
+    "icon_path": "TODO"
+  },
+
+  "38": {
+    "description": "Blowing Snow",
+    "icon_path": "TODO"
+  },
+
+  "39": {
+    "description": "Drifting Snow",
+    "icon_path": "TODO"
+  },
+
+  "40": {
+    "description": "Fog",
+    "icon_path": "TODO"
+  },
+
+  "41": {
+    "description": "Fog",
+    "icon_path": "TODO"
+  },
+
+  "42": {
+    "description": "Fog",
+    "icon_path": "TODO"
+  },
+
+  "43": {
+    "description": "Fog",
+    "icon_path": "TODO"
+  },
+
+  "44": {
+    "description": "Fog",
+    "icon_path": "TODO"
+  },
+
+  "45": {
+    "description": "Fog",
+    "icon_path": "TODO"
+  },
+
+  "46": {
+    "description": "Fog",
+    "icon_path": "TODO"
+  },
+
+  "47": {
+    "description": "Fog",
+    "icon_path": "TODO"
+  },
+
+  "48": {
+    "description": "Fog",
+    "icon_path": "TODO"
+  },
+
+  "49": {
+    "description": "Fog",
+    "icon_path": "TODO"
+  },
+
+  "50": {
+    "description": "Drizzle",
+    "icon_path": "TODO"
+  },
+
+  "51": {
+    "description": "Drizzle",
+    "icon_path": "TODO"
+  },
+
+  "52": {
+    "description": "Drizzle",
+    "icon_path": "TODO"
+  },
+
+  "53": {
+    "description": "Drizzle",
+    "icon_path": "TODO"
+  },
+
+  "54": {
+    "description": "Drizzle",
+    "icon_path": "TODO"
+  },
+
+  "55": {
+    "description": "Drizzle",
+    "icon_path": "TODO"
+  },
+
+  "56": {
+    "description": "Drizzle",
+    "icon_path": "TODO"
+  },
+
+  "57": {
+    "description": "Drizzle",
+    "icon_path": "TODO"
+  },
+
+  "58": {
+    "description": "Drizzle",
+    "icon_path": "TODO"
+  },
+
+  "59": {
+    "description": "Drizzle",
+    "icon_path": "TODO"
+  },
+
+  "60": {
+    "description": "Rain",
+    "icon_path": "TODO-slight"
+  },
+
+  "61": {
+    "description": "Rain",
+    "icon_path": "TODO-slight"
+  },
+
+  "62": {
+    "description": "Rain",
+    "icon_path": "TODO-moderate"
+  },
+
+  "63": {
+    "description": "Rain",
+    "icon_path": "TODO-moderate"
+  },
+
+  "64": {
+    "description": "Rain",
+    "icon_path": "TODO-heavy"
+  },
+
+  "65": {
+    "description": "Rain",
+    "icon_path": "TODO-heavy"
+  },
+
+  "66": {
+    "description": "Freezing Rain",
+    "icon_path": "TODO-slight"
+  },
+
+  "67": {
+    "description": "Freezing Rain",
+    "icon_path": "TODO-moderate-heavy"
+  },
+
+  "68": {
+    "description": "Rain & Snow",
+    "icon_path": "TODO"
+  },
+
+  "69": {
+    "description": "Rain & Snow",
+    "icon_path": "TODO"
+  },
+
+  "70": {
+    "description": "Snow",
+    "icon_path": "TODO-slight"
+  },
+
+  "71": {
+    "description": "Snow",
+    "icon_path": "TODO-slight"
+  },
+
+  "72": {
+    "description": "Snow",
+    "icon_path": "TODO-moderate"
+  },
+
+  "73": {
+    "description": "Snow",
+    "icon_path": "TODO-moderate"
+  },
+
+  "74": {
+    "description": "Snow",
+    "icon_path": "TODO-heavy"
+  },
+
+  "75": {
+    "description": "Snow",
+    "icon_path": "TODO-heavy"
+  },
+
+  "76": {
+    "description": "Ice Crystals",
+    "icon_path": "TODO"
+  },
+
+  "77": {
+    "description": "Snow",
+    "icon_path": "TODO"
+  },
+
+  "78": {
+    "description": "Snow Crystals",
+    "icon_path": "TODO"
+  },
+
+  "79": {
+    "description": "Ice Pellets",
+    "icon_path": "TODO"
+  },
+
+  "80": {
+    "description": "Shower",
+    "icon_path": "TODO-slight"
+  },
+
+  "81": {
+    "description": "Shower",
+    "icon_path": "TODO-moderate"
+  },
+
+  "82": {
+    "description": "Shower",
+    "icon_path": "TODO-heavy"
+  },
+
+  "83": {
+    "description": "Rain & Snow",
+    "icon_path": "TODO-slight"
+  },
+
+  "84": {
+    "description": "Rain & Snow",
+    "icon_path": "TODO-moderate-heavy"
+  },
+
+  "85": {
+    "description": "Snow",
+    "icon_path": "TODO-slight"
+  },
+
+  "86": {
+    "description": "Snow",
+    "icon_path": "TODO-moderate-heavy"
+  },
+
+  "87": {
+    "description": "Hail",
+    "icon_path": "TODO"
+  },
+
+  "88": {
+    "description": "Hail",
+    "icon_path": "TODO"
+  },
+
+  "89": {
+    "description": "Hail",
+    "icon_path": "TODO"
+  },
+
+  "90": {
+    "description": "Hail",
+    "icon_path": "TODO"
+  },
+
+  "91": {
+    "description": "Rain",
+    "icon_path": "TODO-slight"
+  },
+
+  "92": {
+    "description": "Rain",
+    "icon_path": "TODO-moderate-heavy"
+  },
+
+  "93": {
+    "description": "Snow",
+    "icon_path": "TODO-slight"
+  },
+
+  "94": {
+    "description": "Snow",
+    "icon_path": "TODO-moderate-heavy"
+  },
+
+  "95": {
+    "description": "Thunderstorm & Rain",
+    "icon_path": "TODO"
+  },
+
+  "96": {
+    "description": "Thunderstorm & Hail",
+    "icon_path": "TODO"
+  },
+
+  "97": {
+    "description": "Thunderstorm & Rain",
+    "icon_path": "TODO"
+  },
+
+  "98": {
+    "description": "Thunderstorm & Sandstorm",
+    "icon_path": "TODO"
+  },
+
+  "99": {
+    "description": "Thunderstorm & Hail",
+    "icon_path": "TODO"
+  }
+}

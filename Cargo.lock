@@ -1312,6 +1312,7 @@ dependencies = [
  "leptos",
  "reqwasm",
  "serde",
+ "serde_json",
  "thiserror",
 ]
 
