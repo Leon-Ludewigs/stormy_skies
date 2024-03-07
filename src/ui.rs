@@ -3,7 +3,7 @@ use leptos::*;
 use crate::data::{Coordinates, WeatherRegistry};
 use crate::open_meteo::{self, WeatherData};
 use crate::util::{AlwaysEqual, NeverEqual};
-use std::rc::Rc;
+use std::sync::Arc;
 
 enum ApiCallState {
     NotCalled,
@@ -13,12 +13,12 @@ enum ApiCallState {
 }
 
 #[component]
-pub fn App(weather_registry: Rc<WeatherRegistry>) -> impl IntoView {
+pub fn App(weather_registry: Arc<WeatherRegistry>) -> impl IntoView {
     let (get_coordinates, set_coordinates) = create_signal::<Option<NeverEqual<Coordinates>>>(None);
 
     let source = move || (AlwaysEqual(weather_registry.clone()), get_coordinates());
 
-    async fn fetcher((weather_registry, coordinates): (AlwaysEqual<Rc<WeatherRegistry>>, Option<NeverEqual<Coordinates>>))
+    async fn fetcher((weather_registry, coordinates): (AlwaysEqual<Arc<WeatherRegistry>>, Option<NeverEqual<Coordinates>>))
                      -> Option<Result<WeatherData, open_meteo::Error>> {
         let coordinates = coordinates?.into_inner();
         let weather_registry = weather_registry.into_inner();
@@ -40,8 +40,6 @@ pub fn App(weather_registry: Rc<WeatherRegistry>) -> impl IntoView {
             Some(Some(Ok(response))) => ApiCallState::Responded(response),
         }
     };
-
-    // TODO add fallback, see https://github.com/leptos-rs/leptos/blob/main/examples/fetch/src/lib.rs
 
     view! {
         <Header set_coordinates=set_coordinates/>
@@ -150,8 +148,13 @@ fn MainWithError<F>(error: F) -> impl IntoView where F: Fn() -> open_meteo::Erro
 
 #[component]
 fn MainWithLoadedData<F>(weather_data: F) -> impl IntoView where F: Fn() -> WeatherData + 'static {
+    let weather_data = Signal::derive(weather_data);
+    let icon_path = move || weather_data().weather.icon_path.to_string();
+    let current_weather_description = move || weather_data().weather.description.to_string();
+
     view! {
-        <h1>Current Weather: { move || weather_data().weather.description.to_string() }</h1>
+        <img src={ icon_path }/>
+        <h1>Current Weather: { current_weather_description }</h1>
     }
 }
 

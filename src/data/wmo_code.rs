@@ -11,7 +11,7 @@ impl TryFrom<u8> for WmoCode {
     fn try_from(value: u8) -> Result<Self, Self::Error> {
         if value > MAX_VALUE {
             Err(Error::InvalidValue(value))
-        } else { 
+        } else {
             Ok(WmoCode(value))
         }
     }

@@ -1,0 +1,48 @@
+{
+  "blowing-snow": "MISSING",
+
+  "clear": "sun",
+
+  "drifting-snow": "MISSING",
+  "drizzle": "MISSING",
+  "dust": "MISSING",
+  "dust-whirls": "MISSING",
+
+  "few-clouds": "sun-cloud",
+  "fog": "cloud-fog",
+  "freezing-rain": "MISSING",
+  "funnel-clouds": "MISSING",
+
+  "hail": "MISSING",
+  "haze": "cloud-fog",
+
+  "ice-crystals": "MISSING",
+  "ice-pellets": "MISSING",
+
+  "mist": "cloud-fog",
+  "more-clouds": "cloud",
+
+  "overcast": "two-clouds",
+
+  "rain-heavy": "cloud-rain-heavy",
+  "rain-moderate": "cloud-rain-moderate",
+  "rain-slight": "cloud-rain-slight",
+  "rain-snow": "MISSING",
+
+  "sandstorm": "MISSING",
+  "shower-heavy": "cloud-rain-heavy",
+  "shower-moderate": "cloud-rain-moderate",
+  "shower-slight": "cloud-rain-slight",
+  "smoke": "MISSING",
+  "snow-crystals": "MISSING",
+  "snow-grains": "MISSING",
+  "snow-heavy": "MISSING",
+  "snow-moderate": "MISSING",
+  "snow-slight": "MISSING",
+  "squalls": "cloud-wind",
+
+  "thunderstorm": "cloud-lightning",
+  "thunderstorm-hail": "cloud-snow-lightning",
+  "thunderstorm-rain": "cloud-rain-lightning",
+  "thunderstorm-sandstorm": "MISSING"
+}

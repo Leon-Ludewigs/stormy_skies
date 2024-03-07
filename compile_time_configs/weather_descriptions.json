@@ -1,0 +1,48 @@
+{
+  "blowing-snow": "Blowing Snow",
+
+  "clear": "Clear",
+
+  "drifting-snow": "Drifting Snow",
+  "drizzle": "Drizzle",
+  "dust": "Dust",
+  "dust-whirls": "Dust Whirls",
+
+  "few-clouds": "Sun & Clouds",
+  "fog": "Fog",
+  "freezing-rain": "Freezing Rain",
+  "funnel-clouds": "Funnel Clouds",
+
+  "hail": "Hail",
+  "haze": "Haze",
+
+  "ice-crystals": "Ice Crystals",
+  "ice-pellets": "Ice Pellets",
+
+  "mist": "Mist",
+  "more-clouds": "Clouds",
+
+  "overcast": "Overcast",
+
+  "rain-heavy": "Rain",
+  "rain-moderate": "Rain",
+  "rain-slight": "Rain",
+  "rain-snow": "Rain and Snow",
+
+  "sandstorm": "Sandstorm",
+  "shower-heavy": "Shower",
+  "shower-moderate": "Shower",
+  "shower-slight": "Shower",
+  "smoke": "Smoke",
+  "snow-crystals": "Snow Crystals",
+  "snow-grains": "Snow Grains",
+  "snow-heavy": "Snow",
+  "snow-moderate": "Snow",
+  "snow-slight": "Snow",
+  "squalls": "Squalls",
+
+  "thunderstorm": "Thunderstorm",
+  "thunderstorm-hail": "Thunderstorm",
+  "thunderstorm-rain": "Thunderstorm",
+  "thunderstorm-sandstorm": "Thunderstorm"
+}

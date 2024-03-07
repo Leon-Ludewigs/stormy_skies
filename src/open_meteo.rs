@@ -1,4 +1,4 @@
-use std::rc::Rc;
+use std::sync::Arc;
 use crate::data::{Coordinates, Weather, wmo_code, WmoCode};
 use crate::data::weather::WeatherRegistry;
 
@@ -36,7 +36,7 @@ pub async fn call_api(weather_registry: &WeatherRegistry,
         .await?;
 
     let wmo_code = WmoCode::try_from(api_response.current.weather_code)?;
-    let weather = weather_registry.get(wmo_code).ok_or(Error::WmoCodeNotRegistered(wmo_code))?;
+    let weather = weather_registry.get(wmo_code);
 
     Ok(WeatherData { weather })
 }
@@ -50,12 +50,12 @@ pub enum Error {
     WmoCodeNotRegistered(WmoCode),
 
     #[error("The Open-Meteo API could not be called successfully: {0}")]
-    ApiCall(Rc<reqwasm::Error>),
+    ApiCall(Arc<reqwasm::Error>),
 }
 
 // TODO is there a way to do this with a macro from this-error?
 impl From<reqwasm::Error> for Error {
     fn from(error: reqwasm::Error) -> Self {
-        Error::ApiCall(Rc::new(error))
+        Error::ApiCall(Arc::new(error))
     }
 }
