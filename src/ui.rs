@@ -1,9 +1,9 @@
 use std::ops::Deref;
+use std::rc::Rc;
 use leptos::*;
 use crate::data::{Coordinates, WeatherRegistry};
 use crate::open_meteo::{self, WeatherData};
 use crate::util::{AlwaysEqual, NeverEqual};
-use std::sync::Arc;
 
 enum ApiCallState {
     NotCalled,
@@ -13,12 +13,12 @@ enum ApiCallState {
 }
 
 #[component]
-pub fn App(weather_registry: Arc<WeatherRegistry>) -> impl IntoView {
+pub fn App(weather_registry: Rc<WeatherRegistry>) -> impl IntoView {
     let (get_coordinates, set_coordinates) = create_signal::<Option<NeverEqual<Coordinates>>>(None);
 
     let source = move || (AlwaysEqual(weather_registry.clone()), get_coordinates());
 
-    async fn fetcher((weather_registry, coordinates): (AlwaysEqual<Arc<WeatherRegistry>>, Option<NeverEqual<Coordinates>>))
+    async fn fetcher((weather_registry, coordinates): (AlwaysEqual<Rc<WeatherRegistry>>, Option<NeverEqual<Coordinates>>))
                      -> Option<Result<WeatherData, open_meteo::Error>> {
         let coordinates = coordinates?.into_inner();
         let weather_registry = weather_registry.into_inner();
@@ -149,8 +149,8 @@ fn MainWithError<F>(error: F) -> impl IntoView where F: Fn() -> open_meteo::Erro
 #[component]
 fn MainWithLoadedData<F>(weather_data: F) -> impl IntoView where F: Fn() -> WeatherData + 'static {
     let weather_data = Signal::derive(weather_data);
-    let icon_path = move || weather_data().weather.icon_path.to_string();
-    let current_weather_description = move || weather_data().weather.description.to_string();
+    let icon_path = move || weather_data().weather.icon_path;
+    let current_weather_description = move || weather_data().weather.description;
 
     view! {
         <img src={ icon_path }/>

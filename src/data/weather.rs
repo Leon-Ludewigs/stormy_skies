@@ -1,11 +1,11 @@
 use std::collections::{HashMap, HashSet};
-use std::sync::Arc;
+use crate::util::CloneableStr;
 use crate::data::{wmo_code, WmoCode};
 
 #[derive(Clone, Debug)]
 pub struct Weather {
-    pub description: Arc<str>,
-    pub icon_path: Arc<str>,
+    pub description: CloneableStr,
+    pub icon_path: CloneableStr,
 }
 
 // Registry source files
@@ -15,8 +15,8 @@ const ICON_FILE_NAMES_JSON: &str = include_str!("../../compile_time_configs/icon
 
 #[derive(Debug)]
 pub struct WeatherRegistry {
-    descriptions: HashMap<WmoCode, Arc<str>>,
-    icon_paths: HashMap<WmoCode, Arc<str>>,
+    descriptions: HashMap<WmoCode, CloneableStr>,
+    icon_paths: HashMap<WmoCode, CloneableStr>,
 }
 
 impl WeatherRegistry {
@@ -49,8 +49,8 @@ impl WeatherRegistry {
             }
         }
 
-        let mut descriptions: HashMap<WmoCode, Arc<str>> = HashMap::new();
-        let mut icon_paths: HashMap<WmoCode, Arc<str>> = HashMap::new();
+        let mut descriptions = HashMap::new();
+        let mut icon_paths = HashMap::new();
 
         for (wmo_code, key) in wmo_codes {
             let description = descriptions_from_keys
